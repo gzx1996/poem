@@ -35,7 +35,10 @@ module.exports = {
     all: [],
     find: [],
     get: [],
-    create: [],
+    create: [ctx => {
+      const author = ctx.result.author;
+      ctx.app.service('author').Model.updateOne({ 'name': author }, { 'name': author }, { 'upsert': true });
+    }],
     update: [],
     patch: [],
     remove: []

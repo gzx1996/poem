@@ -1,0 +1,12 @@
+{
+  "apps" : [{
+    "name" : "poem",
+    "script" : "node",
+    "args" : "--max-old-space-size=700 src/",
+    "watch" : ["src/", "config/production.json"],
+    "env": {
+      "NODE_ENV": "production"
+    },
+    "ignore_watch" : ["node_modules"]
+  }]
+}

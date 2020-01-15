@@ -4,6 +4,9 @@
     "node": true,
     "mocha": true
   },
+  "globals": {
+    "Redis": true
+  },
   "parserOptions": {
     "ecmaVersion": 2018
   },
@@ -15,7 +18,7 @@
     ],
     "linebreak-style": [
       "error",
-      "unix"
+      "windows"
     ],
     "quotes": [
       "error",

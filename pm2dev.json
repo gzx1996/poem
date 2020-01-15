@@ -1,0 +1,12 @@
+{
+  "apps" : [{
+    "name" : "poem",
+    "script" : "node",
+    "args" : "src/",
+    "watch" : ["src/", "config/dev.json"],
+    "env": {
+      "NODE_ENV": "dev"
+    },
+    "ignore_watch" : ["node_modules"]
+  }]
+}

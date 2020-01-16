@@ -51,8 +51,7 @@
     </div>
     <div id="cover" style= 'display: none;position:relative; background-color: bisque; width: 98%; min-height: 198px; margin: -199px auto 0px auto; z-index:999;'></div>
     <div id="text">
-      <textarea style="min-height: 470px; width: 100%; font-size: 18px; resize: none;">
-
+      <textarea style="min-height: 470px; width: 100%; font-size: 18px; resize: none;" onkeyup="check()">
       </textarea>
     </div>
   </main>
@@ -105,6 +104,21 @@
       $('#cover').css('display','block')
       $('#cover').html('<h1 onclick="visible()" style="padding-top:60px; text-align: center;">点击显示<h1>')
     }
+  }
+
+  const check = ()=>{
+    let text = $('textarea').val();
+    $.ajax({
+      url: '/api/poem/check',
+      type: 'PUT',
+      data: {
+        _id: id,
+        content: text.trim()
+      }
+    }).then(rs=>{
+      if(!rs.data){ $('textarea').css('color', 'red')}
+      else {$('textarea').css('color', 'black')}
+    })
   }
 
 </script>

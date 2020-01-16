@@ -36,8 +36,28 @@ module.exports = {
     find: [],
     get: [],
     create: [ctx => {
-      const author = ctx.result.author;
-      ctx.app.service('author').Model.updateOne({ 'name': author }, { 'name': author }, { 'upsert': true });
+      let result = ctx.result;
+      if(Acan.isObj(result)) {
+        const author = ctx.result.author;
+        ctx.app.service('author').Model.updateOne({ 'name': author }, { 'name': author }, { 'upsert': true }).then();
+      }else if(Acan.isArr(result)){
+        let authorList = result.map(r => {
+          return r.author;
+        });
+        authorList = Array.from(new Set(authorList));
+        let bulkList = [];
+        authorList.forEach(au => {
+          bulkList.push({
+            updateOne: {
+              filter: { 'name': au },
+              update: { 'name': au },
+              upsert: true
+            }
+          });
+        });
+        ctx.app.service('author').Model.bulkWrite(bulkList).then()
+      }
+      
     }],
     update: [],
     patch: [],

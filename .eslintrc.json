@@ -5,6 +5,7 @@
     "mocha": true
   },
   "globals": {
+    "Acan": true,
     "Redis": true
   },
   "parserOptions": {

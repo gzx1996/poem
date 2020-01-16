@@ -25,7 +25,7 @@ module.exports = async function (app) {
     });
     try{
       console.log(bulkList.length);
-      const res = await app.service('poem').Model.bulkWrite(bulkList);
+      const res = await app.service('poem').create(result);
       console.log(res);
     }catch(e){
       console.log(e);

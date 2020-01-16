@@ -10,10 +10,10 @@ module.exports = function (app) {
   };
 
   // Initialize our service with any options it requires
-  app.use('/author', new Author(options, app));
+  app.use('/api/author', new Author(options, app));
 
   // Get our initialized service so that we can register hooks
-  const service = app.service('author');
+  const service = app.service('api/author');
 
   service.hooks(hooks);
 };

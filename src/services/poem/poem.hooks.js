@@ -55,7 +55,7 @@ module.exports = {
             }
           });
         });
-        ctx.app.service('author').Model.bulkWrite(bulkList).then()
+        ctx.app.service('author').Model.bulkWrite(bulkList).then();
       }
       
     }],

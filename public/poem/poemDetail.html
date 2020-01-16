@@ -1,52 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>A FeathersJS application</title>
-    <meta name="description" content="A FeathersJS server">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-    <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
 
-      html, body {
-        font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif';
-        font-weight: 400;
-        font-size: 16px;
-        color: #2c3e50;
-        background-color: bisque;
-      }
-      main {
-        margin-top: 0px;
-        padding: 20px;
-        width: 70%;
-        margin: 0 auto;
-      }
-      li {
-        list-style: none;
-      }
+<head>
+  <title>A FeathersJS application</title>
+  <meta name="description" content="A FeathersJS server">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-      
-    </style>
-  </head>
-  <body>
-    <main class="container">
-      
-    </main>
-  </body>
+    html,
+    body {
+      font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif';
+      font-weight: 400;
+      font-size: 16px;
+      color: #2c3e50;
+      background-color: bisque;
+    }
+
+    main {
+      margin-top: 0px;
+      padding: 20px;
+      width: 70%;
+      margin: 0 auto;
+    }
+
+    li {
+      list-style: none;
+    }
+
+    #content {
+      width: 100%;
+      min-height: 200px;
+      border: 1px solid black;
+      display: block;
+      z-index: 1;
+      position:relative;
+    }
+  </style>
+</head>
+
+<body>
+  <main class="container">
+    <div id="content" onclick="visible()">
+
+    </div>
+    <div id="cover" style= 'display: none;position:relative; background-color: bisque; width: 98%; min-height: 198px; margin: -199px auto 0px auto; z-index:999;'></div>
+    <div id="text">
+      <textarea style="min-height: 470px; width: 100%; font-size: 18px; resize: none;">
+
+      </textarea>
+    </div>
+  </main>
+</body>
+
 </html>
 
 <script>
-   window.getQs = (param)=>{
-    var query =  location.search.substring(1).split('&');
-    for(var i=0;i<query.length;i++){
-        var kv = query[i].split('=');
-        if(kv[0] == param){
-            return decodeURIComponent(kv[1]);
-        }
+  window.getQs = (param) => {
+    var query = location.search.substring(1).split('&');
+    for (var i = 0; i < query.length; i++) {
+      var kv = query[i].split('=');
+      if (kv[0] == param) {
+        return decodeURIComponent(kv[1]);
+      }
     }
     return null;
   }
@@ -68,4 +89,22 @@
     var rows_txt = temp + "" + param + "=" + paramVal;
     window.location.href = baseURL + "?" + newAdditionalURL + rows_txt;
   }
+  const id = window.getQs('id');
+  $.ajax({
+    url: `/api/poem/${id}`,
+    type: 'GET',
+    async: false
+  }).then(rs => {
+    $('#content').html(`<h2 style="text-align: center;">${rs.title}</h2>` + `<div style="margin: 5px 10px;">${rs.text}<div>`)
+  })
+
+  const visible = ()=>{
+    let n = $('#cover').css('display')
+    if(n == 'block') $('#cover').css('display', 'none')
+    if(n == 'none'){
+      $('#cover').css('display','block')
+      $('#cover').html('<h1 onclick="visible()" style="padding-top:60px; text-align: center;">点击显示<h1>')
+    }
+  }
+
 </script>

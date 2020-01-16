@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>A FeathersJS application</title>
+    <meta name="description" content="A FeathersJS server">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html, body {
+        font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif';
+        font-weight: 400;
+        font-size: 16px;
+        color: #2c3e50;
+        background-color: bisque;
+      }
+      main {
+        margin-top: 0px;
+        padding: 20px;
+        width: 70%;
+        margin: 0 auto;
+      }
+      li {
+        list-style: none;
+      }
+
+      
+    </style>
+  </head>
+  <body>
+    <main class="container">
+      
+    </main>
+  </body>
+</html>
+
+<script>
+   window.getQs = (param)=>{
+    var query =  location.search.substring(1).split('&');
+    for(var i=0;i<query.length;i++){
+        var kv = query[i].split('=');
+        if(kv[0] == param){
+            return decodeURIComponent(kv[1]);
+        }
+    }
+    return null;
+  }
+  window.setQs = (param, paramVal, url = window.location.href) => {
+    var newAdditionalURL = "";
+    var tempArray = url.split("?");
+    var baseURL = tempArray[0];
+    var additionalURL = tempArray[1];
+    var temp = "";
+    if (additionalURL) {
+      tempArray = additionalURL.split("&");
+      for (i = 0; i < tempArray.length; i++) {
+        if (tempArray[i].split('=')[0] != param) {
+          newAdditionalURL += temp + tempArray[i];
+          temp = "&";
+        }
+      }
+    }
+    var rows_txt = temp + "" + param + "=" + paramVal;
+    window.location.href = baseURL + "?" + newAdditionalURL + rows_txt;
+  }
+</script>

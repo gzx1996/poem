@@ -18,4 +18,5 @@ module.exports = function (app) {
   service.hooks(hooks);
 
   app.configure(require('./init'));
+  // app.configure(require('./spider'));
 };

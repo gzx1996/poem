@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>A FeathersJS application</title>
+    <meta name="description" content="A FeathersJS server">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html, body {
+        font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif';
+        font-weight: 400;
+        font-size: 16px;
+        color: #2c3e50;
+        background-color: bisque;
+      }
+      main {
+        margin-top: 0px;
+        padding: 20px;
+        width: 70%;
+        margin: 0 auto;
+      }
+      #authorBox h3 {
+        margin-bottom: 20px;
+      }
+      li {
+        list-style: none;
+      }
+      #authors li{
+        display: inline;
+        width: 15%;
+        margin: 0 5% 5px 0;
+      }
+      li a {
+        color: #2c3e50;
+        text-decoration: none;
+      }
+      li a:hover {
+        color: red;
+      }
+      #authorBox label{
+        margin-top: 12px;
+        font-size: 12px;
+        color: gray;
+      }
+      #currentAuthor {
+        color: red;
+      }
+      .currentAuthor{
+        display: none;
+      }
+      #poemBox {
+        margin-top: 15px;
+        border: black;
+      }
+      #pages{
+        margin-top: 30px;
+      }
+      .title{
+        margin-bottom: 2px;
+        margin-left: -7px;
+      }
+
+      
+    </style>
+  </head>
+  <body>
+    <main class="container">
+      <div id="authorBox">
+        <h3>选择作者</h3>
+        <list id="authors"></list>
+        <label class="currentAuthor">当前作者:<span id="currentAuthor"></span><a style="margin-left: 20px;" onclick="clearAuthor()">清除</a></label> 
+      </div>
+      <div id="poemBox">
+        <list id="poemList"></list>
+      </div>
+      <div id="pages">
+        <list></list>
+      </div>
+    </main>
+  </body>
+</html>
+
+<script>
+  const limit = 50;
+  window.getQs = (param)=>{
+    var query =  location.search.substring(1).split('&');
+    for(var i=0;i<query.length;i++){
+        var kv = query[i].split('=');
+        if(kv[0] == param){
+            return decodeURIComponent(kv[1]);
+        }
+    }
+    return null;
+  }
+    window.setQs = (param, paramVal, url = window.location.href) => {
+      var newAdditionalURL = "";
+      var tempArray = url.split("?");
+      var baseURL = tempArray[0];
+      var additionalURL = tempArray[1];
+      var temp = "";
+      if (additionalURL) {
+        tempArray = additionalURL.split("&");
+        for (i = 0; i < tempArray.length; i++) {
+          if (tempArray[i].split('=')[0] != param) {
+            newAdditionalURL += temp + tempArray[i];
+            temp = "&";
+          }
+        }
+      }
+
+    var rows_txt = temp + "" + param + "=" + paramVal;
+    window.location.href= baseURL + "?" + newAdditionalURL + rows_txt;
+    }
+  let author = null
+  if(window.getQs('author')) {
+    author = window.getQs('author')
+    $('#currentAuthor').text(author)
+    $('.currentAuthor').css('display', 'block')
+  }
+  $.ajax({
+    url: '/api/author',
+    type: 'GET'
+  }).then(rs=>{
+    let data = rs.data;
+    data.forEach(d=>{
+      $('#authors').append(`<li><a href= '/poem?author=${d.name}'>${d.name}</a></li>`)
+    })
+  })
+  const clearAuthor = () => {
+    window.location.href = '/poem'
+  }
+  let skip = window.getQs('skip') * limit || 0
+  let baseQuery = {$skip: skip, $limit: limit, $select: ['title']}
+
+  $.ajax({
+    url:'/api/poem',
+    type: 'GET',
+    data: author ? Object.assign(baseQuery, {author}) : baseQuery 
+  }).then(rs=>{
+    let data = rs.data;
+    let total = parseInt(rs.total)
+    let pages = Math.ceil(total / limit)
+    data.forEach(d=>{
+      $('#poemList').append(`<li class="title"><a href= '/poemDetail?id=${d._id}'>${d.title}</a></li>`)
+    })
+    for(let i = 0; i < pages; i ++){
+      $('#pages').append(`<li style="display: inline; width: 10%; margin:0 5px;" onclick="changePage(${i})">${i+1}</li>`)
+    }
+  })
+
+  const changePage = (i) =>{
+    window.setQs('skip', i)
+  }
+
+
+</script>

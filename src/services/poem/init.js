@@ -1,5 +1,5 @@
 module.exports = async function (app) {
-  let poems = await app.service('poem').Model.find();
+  let poems = await app.service('api/poem').Model.find();
   poems = JSON.parse(JSON.stringify( poems ));
   poems.map(poem => {
     const regex = /[ |?|？|,|，|.|。|!|！|…]/g;

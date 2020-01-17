@@ -39,7 +39,7 @@ module.exports = {
       let result = ctx.result;
       if(Acan.isObj(result)) {
         const author = ctx.result.author;
-        ctx.app.service('author').Model.updateOne({ 'name': author }, { 'name': author }, { 'upsert': true }).then();
+        ctx.app.service('api/author').Model.updateOne({ 'name': author }, { 'name': author }, { 'upsert': true }).then();
       }else if(Acan.isArr(result)){
         let authorList = result.map(r => {
           return r.author;
@@ -55,7 +55,7 @@ module.exports = {
             }
           });
         });
-        ctx.app.service('author').Model.bulkWrite(bulkList).then();
+        ctx.app.service('api/author').Model.bulkWrite(bulkList).then();
       }
       
     }],

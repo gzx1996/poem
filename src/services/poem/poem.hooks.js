@@ -1,7 +1,7 @@
 const feathers = require('@feathersjs/feathers');
 const Mod = {
   async check(ctx){
-    const regex = /[ |?|？|,|，|.|。|!|！|…|、]/g;
+    const regex = /[ |?|？|,|，|.|。|!|！|…|、|\n]/g;
     const content = ctx.data.content.replace(regex,''); 
     const _id = ctx.data._id;
     let total = await new Promise((resolve) => {

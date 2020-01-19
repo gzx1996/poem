@@ -120,9 +120,11 @@
       else {$('textarea').css('color', 'black')}
     })
   }
-  let contentHeight = parseInt($('#content').css('height').replace('px',''))
-  $('#cover').css('height', (contentHeight - 2) + 'px');
-  $('#cover').css('margin-top',  - (contentHeight - 1) + 'px');
+  $(window).ready(function(){
+    let contentHeight = parseInt($('#content').css('height').replace('px',''))
+    $('#cover').css('height', (contentHeight - 2) + 'px');
+    $('#cover').css('margin-top',  - (contentHeight - 1) + 'px');
+  })
   $(window).resize(function(){
     let contentHeight = parseInt($('#content').css('height').replace('px',''))
     $('#cover').css('height', (contentHeight - 2) + 'px');

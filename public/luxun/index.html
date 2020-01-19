@@ -15,7 +15,7 @@
     let text = $('#content').val()
     if(!text) alert('请输入需要查询的语句')
     let host = document.domain
-    let url = host + ':3030/luxun/search'
+    let url = 'http://' + host + ':3030/luxun/search'
     console.log(url)
     $.ajax({
       url: url,

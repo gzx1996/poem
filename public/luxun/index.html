@@ -25,6 +25,8 @@
       if(rs && rs.data){
         $('res').text(rs.data)
       }
+    }).catch(err=>{
+      console.log(err)
     })
   }
 

@@ -1,35 +1,39 @@
 <title>A FeathersJS application</title>
-    <meta name="description" content="A FeathersJS server">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-  </head>
-  <body>
-    <h1>鲁迅到底有没有说过呢？</h1>
-    <input id='content' type="text" placeholder="输入语句"> <button onclick="check()">查询</button>
-    <h2 id='res'></h2>
-  </body>
+<meta name="description" content="A FeathersJS server">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+</head>
+
+<body>
+  <h1>鲁迅到底有没有说过呢？</h1>
+  <input id='content' type="text" placeholder="输入语句"> <button onclick="check()">查询</button>
+  <h2 id='res'></h2>
+</body>
+
 </html>
 
 <script>
-  const check = ()=>{
+  const check = () => {
     let text = $('#content').val()
-    if(!text) alert('请输入需要查询的语句')
+    if (!text) alert('请输入需要查询的语句')
     let host = document.domain
     let url = 'http://' + host + ':3030/luxun/search'
-    console.log(url)
-    $.ajax({
-      url: url,
-      type: 'GET',
-      data: {
-        str: text
-      }
-    }).then(rs=>{
-      if(rs && rs.data){
-        $('res').text(rs.data)
-      }
-    }).catch(err=>{
-      console.log(err)
-    })
+    if (text) {
+      $.ajax({
+        url: url,
+        type: 'GET',
+        data: {
+          str: text
+        }
+      }).then(rs => {
+        if (rs && rs.result) {
+          $('res').text(rs.message)
+        }
+      }).catch(err => {
+        console.log(err)
+      })
+    }
+
   }
 
 </script>

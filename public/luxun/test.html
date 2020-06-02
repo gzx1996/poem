@@ -5,7 +5,7 @@
 </head>
 
 <body>
-  <h1>测试测试测试</h1>
+  <h1 id = "1">测试测试测试</h1>
   <h1>滑动滑动滑动</h1>
 </body>
 
@@ -25,12 +25,10 @@
     })
   }
   window.ontouchstart = e => {
-    console.log(e)
-    var touch = e.touches[0];
-    var x = touch.clientX;
-    var y = touch.clientY;
-    const position = {x, y}
+    const position = {1, 2}
     slide(position);
   }
+  const event = new Event('touchstart')
+  window.dispatchEvent(event);
 
 </script>

@@ -1,0 +1,36 @@
+<title>A FeathersJS application</title>
+<meta name="description" content="A FeathersJS server">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+</head>
+
+<body>
+  <h1>测试测试测试</h1>
+  <h1>滑动滑动滑动</h1>
+</body>
+
+</html>
+
+<script>
+  const slide = (position) => {
+    let host = document.domain
+    let url = '/testSlide'
+    $.ajax({
+      url: url,
+      type: 'GET',
+      data: {position}
+    }).then(rs => {
+    }).catch(err => {
+      console.log(err)
+    })
+  }
+  window.ontouchstart = e => {
+    console.log(e)
+    var touch = e.touches[0];
+    var x = touch.clientX;
+    var y = touch.clientY;
+    const position = {x, y}
+    slide(position);
+  }
+
+</script>

@@ -1,7 +1,7 @@
 module.exports = async function (app) {
   const cheerio = require('cheerio');
   const axios = require('axios');
-  const fn = async (baseUrl = 'http://www.shicimingju.com/chaxun/zuozhe/1.html') => {
+  const fn = async (baseUrl = 'http://www.shicimingju.com/chaxun/zuozhe/10.html') => {
     let rs = await axios.get(baseUrl);
     let $ = cheerio.load(rs.data);
     let urlList = [];
@@ -25,7 +25,7 @@ module.exports = async function (app) {
     });
     try{
       console.log(bulkList.length);
-      const res = await app.service('poem').create(result);
+      const res = await app.service('api/poem').create(result);
       console.log(res);
     }catch(e){
       console.log(e);
@@ -37,7 +37,7 @@ module.exports = async function (app) {
     let list = [];
     $('.shici_list_main').each(function(i,elem){
       let title = $(elem).children('h3').children().text();
-      let text = $(elem).children('.shici_content').text().replace(/[' '|展开全文|收起|\n]/g, '');
+      let text = $(elem).children('.shici_content').text().replace(/[' '|\n]/g, '').replace('展开全文', '').replace('收起', '')
       let obj = { title, text };
       Object.assign(obj, {author: '李白'});
       list.push(obj);

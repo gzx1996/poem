@@ -32,5 +32,8 @@
     const position = {x, y}
     slide(position);
   }
+  let theEvent = document.createEvent("Events");
+  theEvent.initEvent("touchstart", true, true);  
+  window.dispatchEvent(theEvent);
 
 </script>

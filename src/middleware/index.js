@@ -2,8 +2,4 @@
 module.exports = function (app) {
   // Add your custom middleware here. Remember that
   // in Express, the order matters.
-  app.use('/testSlide', (req, res) => {
-    console.log(Acan.time('Y-m-d H:i:s') + '  ' + JSON.stringify(req.query))
-    res.end('')
-  })
 };

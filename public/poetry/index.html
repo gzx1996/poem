@@ -146,7 +146,7 @@
     let total = parseInt(rs.total)
     let pages = Math.ceil(total / limit)
     data.forEach(d=>{
-      $('#poemList').append(`<li class="title"><a href= '/poetry/poemDetail.html?id=${d._id}'>${d.title}</a></li>`)
+      $('#poemList').append(`<li class="title"><a href= '/poetry/detail.html?id=${d._id}'>${d.title}</a></li>`)
     })
     for(let i = 0; i < pages; i ++){
       $('#pages').append(`<li style="display: inline; width: 10%; margin:0 5px;" onclick="changePage(${i})">${i+1}</li>`)

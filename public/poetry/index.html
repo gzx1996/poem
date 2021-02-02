@@ -128,11 +128,11 @@
   }).then(rs=>{
     let data = rs.data;
     data.forEach(d=>{
-      $('#authors').append(`<li><a href= '/poem?author=${d.name}'>${d.name}</a></li>`)
+      $('#authors').append(`<li><a href= '/poetry?author=${d.name}'>${d.name}</a></li>`)
     })
   })
   const clearAuthor = () => {
-    window.location.href = '/poem'
+    window.location.href = '/poetry'
   }
   let skip = window.getQs('skip') * limit || 0
   let baseQuery = {$skip: skip, $limit: limit, $select: ['title']}
@@ -146,7 +146,7 @@
     let total = parseInt(rs.total)
     let pages = Math.ceil(total / limit)
     data.forEach(d=>{
-      $('#poemList').append(`<li class="title"><a href= '/poem/poemDetail.html?id=${d._id}'>${d.title}</a></li>`)
+      $('#poemList').append(`<li class="title"><a href= '/poetry/poemDetail.html?id=${d._id}'>${d.title}</a></li>`)
     })
     for(let i = 0; i < pages; i ++){
       $('#pages').append(`<li style="display: inline; width: 10%; margin:0 5px;" onclick="changePage(${i})">${i+1}</li>`)
